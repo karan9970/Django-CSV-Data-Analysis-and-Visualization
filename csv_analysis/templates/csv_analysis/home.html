@@ -1,0 +1,93 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Analysis</title>
+</head>
+<body>
+    {% load static %}
+    <h1>Upload CSV File</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if summary_stats %}
+        <h2>Summary Statistics</h2>
+        {{ summary_stats|safe }}
+
+        <h2>First Few Rows</h2>
+        {{ first_few_rows|safe }}
+
+        <h2>Missing Values</h2>
+        {{ missing_values|safe }}
+
+        <h2>Medians</h2>
+        {{ medians|safe }}
+
+        {% if histogram_img %}
+            <h2>Visualization</h2>
+            <img src="{% static histogram_img %}" alt="Histogram">
+        {% endif %}
+    {% endif %}
+</body>
+</html> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="container">
+        <h1 class="mb-4">Upload CSV File</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+        {% if summary_stats %}
+            <div class="mt-5">
+                <h2>Summary Statistics</h2>
+                <div class="table-responsive">
+                    {{ summary_stats|safe }}
+                </div>
+
+                <h2 class="mt-4">First Few Rows</h2>
+                <div class="table-responsive">
+                    {{ first_few_rows|safe }}
+                </div>
+
+                <h2 class="mt-4">Missing Values</h2>
+                <div class="table-responsive">
+                    {{ missing_values|safe }}
+                </div>
+
+                <h2 class="mt-4">Medians</h2>
+                <div class="table-responsive">
+                    {{ medians|safe }}
+                </div>
+
+                {% if histogram_img %}
+                    <h2 class="mt-4">Visualization</h2>
+                    <img src="{% static histogram_img %}" alt="Histogram" class="img-fluid">
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
